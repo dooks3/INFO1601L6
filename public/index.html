@@ -1,76 +1,56 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>repl.it</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
+
   <body>
-    <h1>My Page</h1>
-
-    <input type="button" id="alertBtn" value="alert" onclick="alertFun()"/>
-    <input type="button" value="confirm" onclick="confirmFun()"/>
-    <input type="button" value="prompt" onclick="promptFun()"/>
-    <input type="button" id= "myBtn" onclick="myFun" value="click me"/><br>
-
-    <img src="https://thumbs.dreamstime.com/b/city-park-pond-shore-alley-20238927.jpg" id="exerImg" alt="exercise image">
-
-    <span id="result"></span>
-
+    <nav>
+        <div class="nav-wrapper teal" style="padding-left: 10px;">
+          <a href="#!" class="brand-logo">Ajax Demo</a>
+        </div>
+    </nav>
+    <main class="row" style="padding: 40px">
+        <table>
+          <thead>
+                <tr>
+                  <th>#</th>
+                  <th>name</th>
+                  <th>Type</th>
+                  <th>website</th>
+                </tr>
+                </thead>
+                  <tbody id="result">
+                                                
+                  </tbody>
+          </table>
+    </main>
     <script>
+      function drawTable(records){
+        let result = document.querySelector('#result'); 
+        let html = ''; 
 
-      function alertFun(){
-        alert("Hello !");
-      }
-
-      function confirmFun(){
-        let didConfirm = confirm("Are you sure about that?");
-        if(didConfirm){
-          alert("You are confirmed :) ");
-        }else{
-          alert("You did not confirm :( ");
+        for(let record of records){
+          html+=`<tr>
+          <td>${record.id}</td>
+          <td>${record.name}</td>
+          <td>${record.brewery_type}</td>
+          <td>${record.website_url}</td>
+        </tr>`;
         }
+        result.innerHTML = html;
       }
 
-      function promptFun(){
-        let val = prompt("What is your name?"); 
-        alert(`You've eneterd: ${val}`);
-      }
-
-      const result = document.querySelector('#result'); 
-      result.innerHTML = '<h2>My Span</h2>';
-      result.style.color = 'blue'; 
-
-      // task 5
-      function myFun(){
-        alert("hello");
-      }
-
-      function myFun2(){
-        console.log("myFun2 called");
-      }
-
-      // receives the event parameter from addEventListener high order function
-      function logEventType(event){
-        console.log(event.type);
-      }
-      let myBtn = document.querySelector('#myBtn'); 
-
-      // attach myFun2 in additoin ot myFun to the cline event of myBtn
-      myBtn.addEventListener("click",myFun2);
-
-      // 
-      myBtn.addEventListener("mouseover",logEventType); // logs 'mouseover'
-      myBtn.addEventListener("mouseout",logEventType);// logs 'mouseout'
-
-      // exercise 1
-      function loaded(){
-        console.log("Img loaded");
-      }
-      document.getElementById("exerImg").addEventListener("load",loaded);
-
+      drawTable([{
+        id: 1, 
+        name: "bob's",
+        brewery_type:"fire",
+        website_url:"https://bobs.com"
+      }])
+      
     </script>
-    <script src="script.js"></script>
   </body>
-</html>
+</html
