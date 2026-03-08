@@ -20,3 +20,16 @@ window.onload = function(event){
     console.log("Page has loaded"); 
 
 }
+
+// task 5 continued
+
+let obj2 = myobj; 
+obj2.name = "Shelly"; 
+
+console.log(myobj.name);
+
+let obj3={}; 
+Object.assign(obj3,myobj); 
+obj3.name="smith"; 
+
+console.log(myobj.name, obj3.name);
