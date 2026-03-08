@@ -30,38 +30,44 @@
     </main>
     <script>
       function drawTable(records){
-        let result = document.querySelector('#result'); 
-        let html = ''; 
-
-        for(let record of records){
-          html+=`<tr>
-          <td>${record.id}</td>
-          <td>${record.name}</td>
-          <td>${record.brewery_type}</td>
-          <td>${record.website_url}</td>
-        </tr>`;
-        }
-        result.innerHTML = html;
+          let result = document.querySelector('#result');
+          //add html code inside of result
+          let html = '';// create html string
+          for(let record of records){
+              //build html string
+              html += `<tr id="${record.id}">
+                <td>${record.id}</td>
+                <td>${record.name}</td>
+                <td>${record.brewery_type}</td>
+                <td><a href="#${record.id}" onclick="getData('https://api.openbrewerydb.org/breweries/${record.id}', drawDetails)" >View More Details</a></td>    
+              </tr>`;
+          }
+          result.innerHTML = html;//add html string to DOM
       }
 
-      drawTable([{
-        id: 1, 
-        name: "bob's",
-        brewery_type:"fire",
-        website_url:"https://bobs.com"
-      }])
+      function drawDetails(record){
+        const section = document.querySelector('#details');
+        // details.innerHTML = `${JSON.stringify(record, null, 2)}`;
+        details.innerHTML = `<ul>
+              <li>State: ${record.state}</li>
+              <li>Country: ${record.country}</li>
+              <li>Phone: ${record.phone}</li>
+        </ul>`;
+      }
 
-      async function getData(url){
+      //function MUST be declared async
+      async function getData(url, renderFun){
         try{
-          let response = await fetch(url); // send the https request and get response
-          let result = await response.json(); // gete data from response
-          drawTable(result); // writes the fetch data to the table
+          let response = await fetch(url);//1. Send http request and get response
+          let result = await response.json();//2. Get data from response
+          renderFun(result);// 3. Do something with the data
         }catch(e){
-          console.log(e); // finds and logs errors
+            console.log(e);//catch and log any errors
         }
       }
-      getData("https://api.openbrewerydb.org/breweries/search?query=harry");
       
+      getData("https://api.openbrewerydb.org/breweries", drawTable)
+
     </script>
   </body>
 </html
